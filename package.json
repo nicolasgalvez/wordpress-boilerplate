@@ -21,9 +21,17 @@
   "devDependencies": {
     "@axe-core/cli": "^4.4.4-alpha.298",
     "@babel/polyfill": "^7.12.1",
+    "@hannohealth/jest-csv-reporter": "^1.0.0",
+    "@sprucelabs/jest-sheets-reporter": "^2.0.21",
     "@wordpress/env": "^5.1.0",
     "axe-core": "^4.4.3",
     "babel-jest": "^29.3.1",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
+    "file-loader": "^6.2.0",
+    "google-spreadsheet": "^3.3.0",
+    "html-entities": "^2.3.3",
+    "html-validate": "^7.10.0",
     "html-validator": "^6.0.1",
     "inquirer": "^9.1.0",
     "jest": "^27.5.1",
@@ -35,14 +43,7 @@
     "supertest": "^6.3.3",
     "synchronous-promise": "^2.0.16",
     "w3c-html-validator": "^1.1.2",
-    "@hannohealth/jest-csv-reporter": "^1.0.0",
-    "@sprucelabs/jest-sheets-reporter": "^2.0.21",
-    "dotenv": "^16.4.5",
-    "dotenv-cli": "^7.4.1",
-    "file-loader": "^6.2.0",
-    "google-spreadsheet": "^3.3.0",
-    "html-entities": "^2.3.3",
-    "html-validate": "^7.10.0"
+    "procyon-cli": "github:nicolasgalvez/procyon-cli"
   },
   "workspaces": [
     "$npm_package_config_themePath"

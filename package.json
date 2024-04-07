@@ -1,0 +1,50 @@
+{
+  "name": "procyon-creative/wordpress-boilerplate",
+  "type": "module",
+  "config": {
+    "port": "3000",
+    "themeName": "procyon",
+    "themePath": "public/wp-content/themes/$npm_package_config_themeName",
+    "testPath": "./test",
+    "binPath": "./bin",
+    "scriptsPath": "$npm_package_config_binPath/scripts"
+  },
+  "scripts": {
+    "axe": "axe https://localhost:$npm_package_config_port --chrome-options=\"ignore-certificate-errors\"",
+    "watch": "npm run watch -w $npm_package_config_themePath",
+    "test": "jest tests $TARGET_ENV",
+    "test:html": "bin/scripts/html-validator.js $TARGET_ENV",
+    "build": "npm run build --workspaces --if-present",
+    "build:theme": "composer run-script build",
+    "wp-env": "wp-env"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.4.4-alpha.298",
+    "@babel/polyfill": "^7.12.1",
+    "@wordpress/env": "^5.1.0",
+    "axe-core": "^4.4.3",
+    "babel-jest": "^29.3.1",
+    "html-validator": "^6.0.1",
+    "inquirer": "^9.1.0",
+    "jest": "^27.5.1",
+    "jest-allresult-csv-reporter": "^1.0.0",
+    "jest-html-reporter": "^3.7.0",
+    "jest-image-snapshot": "^4.5.1",
+    "jest-stare": "^2.4.1",
+    "puppeteer": "^13.5.2",
+    "supertest": "^6.3.3",
+    "synchronous-promise": "^2.0.16",
+    "w3c-html-validator": "^1.1.2",
+    "@hannohealth/jest-csv-reporter": "^1.0.0",
+    "@sprucelabs/jest-sheets-reporter": "^2.0.21",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
+    "file-loader": "^6.2.0",
+    "google-spreadsheet": "^3.3.0",
+    "html-entities": "^2.3.3",
+    "html-validate": "^7.10.0"
+  },
+  "workspaces": [
+    "$npm_package_config_themePath"
+  ]
+}

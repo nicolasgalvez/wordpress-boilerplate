@@ -1,0 +1,55 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+orbs:
+  slack: circleci/slack@4.10.1
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  build:
+    resource_class: small
+    docker:
+      - image: cimg/php:7.4
+    steps:
+      - checkout # special step to check out source code to working directory
+      - add_ssh_keys
+      - run: sudo apt-get update -y && sudo apt install rsync -y
+      # Run build, this will only run on the theme workspace so there is no need to install the base dev dependencies
+      - run: npm run build
+      # - run: php --version
+      # - run: ls -lha
+      - run: ssh-keyscan -H -p $PORT $HOSTNAME > ~/.ssh/known_hosts
+      - run: ssh $USER@$HOSTNAME -p $PORT -C 'echo $HOME'
+      - run: ssh $USER@$HOSTNAME -p $PORT -C 'mkdir -p cibackup && cp -r public/wp-content/plugins cibackup/'
+      - run: ssh $USER@$HOSTNAME -p $PORT -C 'cp -r public/wp-content/themes cibackup/'
+      - run: ssh $USER@$HOSTNAME -p $PORT -C 'rm -rf public/wp-content/plugins'
+      - run: ssh $USER@$HOSTNAME -p $PORT -C 'rm -rf public/wp-content/themes'
+      - run: rsync -chavzP --exclude '.git' -e "ssh -p $PORT" public/ $USER@$HOSTNAME:public/
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+
+#  deploy:
+#    machine:
+#      enabled: true
+#    steps:
+#      - run:
+#          name: Deploy Over SSH
+#          command: |
+#            ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          context: Default
+      - deploy:
+          requires:
+            - build # only deploy once build job has completed
+          filters:
+            branches:
+              only: staging # only deploy on the staging branch

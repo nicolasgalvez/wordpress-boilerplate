@@ -1,0 +1,57 @@
+{
+  "name": "launcbrigade/wordpress-boilerplate",
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "launchbrigade/block-brigade",
+        "version": "1",
+        "type": "wordpress-plugin",
+        "source": {
+          "url": "git@github.com:LaunchBrigade/block-brigade.git",
+          "type": "git",
+          "reference": "main"
+        },
+        "extra": {
+          "installer-name": "block-brigade"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "launchbrigade/doubleoone",
+        "version": "1",
+        "type": "wordpress-theme",
+        "source": {
+          "url": "git@github.com:LaunchBrigade/doubleoone.git",
+          "type": "git",
+          "reference": "main"
+        },
+        "extra": {
+          "installer-name": "doubleoone"
+        }
+      }
+    }
+  ],
+  "require-dev": {
+    "launchbrigade/block-brigade": "^1",
+    "launchbrigade/doubleoone": "^1",
+    "composer/installers": "^2.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  },
+  "extra": {
+    "installer-paths": {
+      "public/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "public/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    }
+  }
+}

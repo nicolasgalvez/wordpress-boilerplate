@@ -1,0 +1,41 @@
+# Project
+.idea
+
+# Ignore everything in the WordPress root directory
+/public
+
+# But not these directories...
+# WordPress themes
+!/publicwp-content/themes/**/*
+
+# WordPress plugins
+# Note: as of 2023, disabled by default since clients often make changes on the live site
+#!/publicwp-content/plugins/**/*
+
+# Ignore node dependency directories in the root, but not in the theme or plugin directories
+/node_modules/
+/vendor/
+
+# Don't use the lock file since yarn or pnpm might be used
+/package-lock.json
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+### macOS template
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Test artifacts
+/jest-stare/
+/tests/results/

@@ -39,3 +39,4 @@
 # Test artifacts
 /jest-stare/
 /tests/results/
+.env

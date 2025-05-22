@@ -1,57 +1,36 @@
 {
-  "name": "launcbrigade/wordpress-boilerplate",
-  "repositories": [
-    {
-      "type": "package",
-      "package": {
-        "name": "launchbrigade/block-brigade",
-        "version": "1",
-        "type": "wordpress-plugin",
-        "source": {
-          "url": "git@github.com:LaunchBrigade/block-brigade.git",
-          "type": "git",
-          "reference": "main"
-        },
-        "extra": {
-          "installer-name": "block-brigade"
+    "name": "helloworld/site",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Helloworld\\Site\\": "src/"
         }
-      }
     },
-    {
-      "type": "package",
-      "package": {
-        "name": "launchbrigade/doubleoone",
-        "version": "1",
-        "type": "wordpress-theme",
-        "source": {
-          "url": "git@github.com:LaunchBrigade/doubleoone.git",
-          "type": "git",
-          "reference": "main"
-        },
-        "extra": {
-          "installer-name": "doubleoone"
+    "require-dev": {
+        "nunomaduro/collision": "^5.0",
+        "phpunit/phpunit": "^9.3.3",
+        "squizlabs/php_codesniffer": "^3.0@dev",
+        "wp-coding-standards/wpcs": "^3.0"
+    },
+    "scripts": {
+        "phpcbf": "phpcbf -s --standard=./phpcs.xml",
+        "phpcs": "phpcs -s --standard=./phpcs.xml ",
+        "phpunit": "phpunit",
+        "test": [
+            "@lint",
+            "@phpunit"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Nick Galvez",
+            "email": "nicholas.galvez@gmail.com"
         }
-      }
+    ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
     }
-  ],
-  "require-dev": {
-    "launchbrigade/block-brigade": "^1",
-    "launchbrigade/doubleoone": "^1",
-    "composer/installers": "^2.1"
-  },
-  "config": {
-    "allow-plugins": {
-      "composer/installers": true
-    }
-  },
-  "extra": {
-    "installer-paths": {
-      "public/wp-content/plugins/{$name}/": [
-        "type:wordpress-plugin"
-      ],
-      "public/wp-content/themes/{$name}/": [
-        "type:wordpress-theme"
-      ]
-    }
-  }
 }

@@ -5,51 +5,48 @@ config:
   via: nginx
   webroot: public
   database: mysql
-  xdebug: true
+  xdebug: false
 #  config:
 #      php: .vscode/php.ini
 keys: false
 #env_file:
 #  - .env
 services:
-  database:
-    portforward: true
+  node:
+    type: node:20
   appserver:
-    xdebug: "debug,develop"
+#    config:
+#      php: config/php.ini # Use a custom php.ini file.
     overrides:
       environment:
-        # Support XDEBUG.
+        XDEBUG_MODE: 'debug,develop,profile'
         PHP_IDE_CONFIG: "serverName=appserver"
-    build_as_root:
-      - set -eux;
-      - rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && pkill -o -USR2 php-fpm
-      - echo "Updating PHP-FPM settings ..."
-      - sed -i 's/pm.max_children = 5/pm.max_children = 128/g' /usr/local/etc/php-fpm.d/www.conf
-      - sed -i 's/pm.min_spare_servers = 1/pm.min_spare_servers = 32/g' /usr/local/etc/php-fpm.d/www.conf
-      - sed -i 's/pm.max_spare_servers = 3/pm.max_spare_servers = 64/g' /usr/local/etc/php-fpm.d/www.conf
-      - sed -i 's/pm.start_servers = 2/pm.start_servers = 32/g' /usr/local/etc/php-fpm.d/www.conf
-      - sed -i 's/;pm.max_requests = 500/pm.max_requests = 500/g' /usr/local/etc/php-fpm.d/www.conf
-#      - apt-get update -y
-#      - apt-get install -y libssh2-1-dev
-#      - yes '' | pecl install -f ssh2-1.3.1
-#      - docker-php-ext-enable ssh2
+        XDEBUG_SESSION_START: lando
 #  phpmyadmin:
 #    type: phpmyadmin
 #    hosts:
 #      - database
-#  mailhog:
-#    type: mailhog
-#    portforward: false
-#    hogfrom:
-#      - appserver
+  mailhog:
+    type: mailhog
+    portforward: true
+    hogfrom:
+      - appserver
 tooling:
+  npm:
+    service: node
+  node:
+    service: node
   xdebug-on:
     service: appserver
-    description: Enable xdebug for nginx.
-    cmd: rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && docker-php-ext-enable xdebug && pkill -o -USR2 php-fpm && echo "Xdebug enabled"
+    description: Enable Xdebug.
     user: root
+    cmd:
+      - docker-php-ext-enable xdebug && kill -USR2 $(pgrep -o php-fpm) > /dev/null || /etc/init.d/apache2 reload
+      - tput setaf 2 && echo "Xdebug On" && tput sgr 0 && echo
   xdebug-off:
     service: appserver
-    description: Disable xdebug for nginx.
-    cmd: rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && pkill -o -USR2 php-fpm && echo "Xdebug disabled"
+    description: Disable Xdebug.
     user: root
+    cmd:
+      - rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 $(pgrep -o php-fpm) > /dev/null || /etc/init.d/apache2 reload
+      - tput setaf 1 && echo "Xdebug Off" && tput sgr 0 && echo

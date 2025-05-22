@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ruleset name="Procyon WordPress Coding Standards">
+    <description>WordPress Coding Standards for PHP</description>
+    <arg name="parallel" value="8"/>
+    <arg name="colors"/>
+    <arg value="np"/>
+
+    <!-- Specifically target the theme. -->
+    <file>web/wp-content/themes/hwd</file>
+
+    <!-- Exclude the Composer Vendor directory. -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <!-- Exclude the Node Modules directory. -->
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <!-- Exclude minified Javascript files. -->
+    <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>dist/</exclude-pattern>
+    <!-- Exclude JavaScript and TypeScript files. Use the more modern @wordpress/eslint-plugin/recommended standards -->
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.ts</exclude-pattern>
+    <exclude-pattern>*.?sx</exclude-pattern>
+
+    <!-- Exclude code we do not own -->
+    <exclude-pattern>plugins/</exclude-pattern>
+    <exclude-pattern>mu-plugins/</exclude-pattern>
+    <exclude-pattern>index.php</exclude-pattern>
+    <exclude-pattern>themes/kadence</exclude-pattern>
+    <!-- Let's also check that everything is properly documented. -->
+    <rule ref="WordPress-Docs"/>
+
+    <!-- Ensure TODOs are removed. TODO maybe this should be in dist? (a little todo humor) -->
+    <rule ref="Generic.Commenting.Todo"/>
+
+    <!-- Exclude specific sniffs -->
+    <rule ref="Squiz.Commenting.FileComment">
+        <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+    </rule>
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+    </rule>
+    <!-- Some commented-out irony -->
+    <!--	<rule ref="Squiz.PHP.CommentedOutCode.Found">-->
+    <!--		<exclude-pattern>web/</exclude-pattern>-->
+    <!--	</rule>-->
+    <rule ref="PSR2">
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+    </rule>
+    <rule ref="Squiz.Commenting.InlineComment">
+        <exclude-pattern>web/</exclude-pattern>
+    </rule>
+</ruleset>

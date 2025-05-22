@@ -6,7 +6,7 @@
     <arg value="np"/>
 
     <!-- Specifically target the theme. -->
-    <file>web/wp-content/themes/hwd</file>
+    <file>web/wp-content/themes/</file>
 
     <!-- Exclude the Composer Vendor directory. -->
     <exclude-pattern>/vendor/*</exclude-pattern>

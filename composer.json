@@ -1,5 +1,5 @@
 {
-    "name": "helloworld/site",
+    "name": "procyoncreative/site",
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {

@@ -1,0 +1,4 @@
+name: limitlessucdavis
+recipe: wordpress
+config:
+  php: '8.2'

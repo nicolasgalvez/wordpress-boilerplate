@@ -2,12 +2,15 @@
 .idea
 
 # Ignore everything in the WordPress root directory
-/public
+/public/*
 
-# But not these directories...
-# WordPress themes
-!/publicwp-content/themes/**/*
+# In order to allow themes, you must exclude the FILES in the wp-content dir. And then exclude the directory itself.
+/public/wp-content/*
+!/public/wp-content/
 
+# include WordPress themes
+!/public/wp-content/themes/
+public/wp-content/themes/twentytwenty*
 # WordPress plugins
 # Note: as of 2023, disabled by default since clients often make changes on the live site
 #!/publicwp-content/plugins/**/*
